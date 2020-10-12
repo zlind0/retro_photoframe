@@ -6,7 +6,8 @@ import os, sys
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("--dir", help='Specify a folder path. For example, `--dir "C:\Users\heber\Pictures"`. Note that a "processed" folder will be created and be used to store processed files.', required=True)
+parser.add_argument("--dir",help='''Specify folder path. For example, --dir "C:\\Users\\heber\\Pictures".
+                    Note that a "processed" folder will be created and be used to store processed files.''',required=True)
 args = parser.parse_args()
 
 
