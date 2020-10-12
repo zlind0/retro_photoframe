@@ -29,8 +29,8 @@ for file in progressbar(os.listdir(args.dir)):
     try:
         if not os.path.exists(processeddir):
             os.mkdir(processeddir)
-#         if os.path.exists(os.path.join(processeddir, file)):
-#             continue
+        if os.path.exists(os.path.join(processeddir, file)):
+            continue
 
         img = Image.open(os.path.join(args.dir, file))
         font = ImageFont.truetype("retro.ttf", int(img.size[0]/30))
