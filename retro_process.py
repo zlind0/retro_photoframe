@@ -40,10 +40,10 @@ for file in progressbar(os.listdir(args.dir)):
             exifs[TAGS.get(k)]=v
 
         iso=exifs["ISOSpeedRatings"]
-        focallen=int(exifs["FocalLength"])
-        shutter=exifs["ExposureTime"]
+        focallen=int(exifs["FocalLength"][0]/exifs["FocalLength"][1])
+        shutter=exifs["ExposureTime"][0]/exifs["ExposureTime"][1]
         shottime=exifs["DateTimeDigitized"].replace(":"," ")
-        fnum=str(exifs["FNumber"]).replace(".0","")
+        fnum=str(exifs["FNumber"][0]/exifs["FNumber"][1]).replace(".0","")
         if shutter<0.3: 
             shutter="1/"+str(int(1/shutter))
         else:
