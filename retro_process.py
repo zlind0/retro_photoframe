@@ -58,10 +58,13 @@ def processone(packedarg):
         if shutter<0.3: 
             shuttertext="S/"
             shutter="%-4.0f"%(1/shutter)
+        elif shutter<10:
+            shuttertext="S "
+            shutter="%-.1f\""%shutter
         else:
             shuttertext="S "
-            shutter="%d\""%shutter
-        shutter=" "*(4-len(shutter))+shutter
+            shutter="%-.0f\""%shutter
+        #shutter=" "*(4-len(shutter))+shutter
 
         borderwidth=int(min(img.size)*0.03)
         textheight=int(img.size[0]*0.06)
