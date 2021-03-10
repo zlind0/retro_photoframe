@@ -31,10 +31,10 @@ def processone(packedarg):
             exifs[TAGS.get(k)]=v
 
         file=exifs["DateTimeDigitized"].replace(":","")+".JPG"
-        if os.path.exists(os.path.join(processeddir, file)):
-            return
+        # if os.path.exists(os.path.join(processeddir, file)):
+        #     return
 
-        font = ImageFont.truetype("retro.ttf", int(img.size[0]/30))
+        font = ImageFont.truetype("retro2.ttf", int(img.size[0]/80))
         monofont = ImageFont.truetype("mono.ttf", int(img.size[0]/60))
         
 
@@ -57,7 +57,7 @@ def processone(packedarg):
 
         if shutter<0.3: 
             shuttertext="S/"
-            shutter="%-4.0f"%(1/shutter)
+            shutter="1/%-4.0f"%(1/shutter)
         elif shutter<10:
             shuttertext="S "
             shutter="%-.1f\""%shutter
@@ -67,22 +67,22 @@ def processone(packedarg):
         #shutter=" "*(4-len(shutter))+shutter
 
         borderwidth=int(min(img.size)*0.03)
-        textheight=int(img.size[0]*0.06)
+        textheight=int(min(img.size)*0.03)
         newim = Image.new(mode = "RGB", size=(int(img.size[0])+borderwidth*2, int(img.size[1])+borderwidth+textheight), color=(20,20,20))
 
         newim.paste(img, (borderwidth, borderwidth))
         draw = ImageDraw.Draw(newim)
 
-        digital_text_y=img.size[1]+textheight*0.5+borderwidth*0.5
-        mono_text_y=img.size[1]+textheight*0.3+borderwidth*0.5
-        draw.text((borderwidth+img.size[0]*0.06, mono_text_y),f"mm {shuttertext}      f/     ISO",(204, 255, 51),font=monofont)
-        draw.text((borderwidth+img.size[0]*0.01, digital_text_y),f"{focallen}",(204, 255, 51),font=font)
-        draw.text((borderwidth+img.size[0]*0.11, digital_text_y),f"{shutter}",(204, 255, 51),font=font)
-        draw.text((borderwidth+img.size[0]*0.20, digital_text_y),f"{fnum}",(204, 255, 51),font=font)
-        draw.text((borderwidth+img.size[0]*0.30, digital_text_y),f"{iso}",(204, 255, 51),font=font)
-        draw.text((borderwidth+img.size[0]*0.65, mono_text_y),f"DATE",(204, 255, 51),font=monofont)
-        draw.text((borderwidth+img.size[0]*0.70, digital_text_y),f"{shottime}",(204, 255, 51),font=font)
-        draw.text((borderwidth+img.size[0]*0.45, digital_text_y),args.author,(255, 102, 102),font=font)
+        digital_text_y=img.size[1]+textheight*0.5+borderwidth*0.6
+        mono_text_y=img.size[1]+textheight*0.5+borderwidth*0.8
+        # draw.text((borderwidth+img.size[0]*0.06, mono_text_y),f"mm {shuttertext}      f/     ISO",(204, 255, 51),font=monofont)
+        draw.text((borderwidth+img.size[0]*0.01, digital_text_y),f"{focallen}mm",(232, 190, 90),font=font)
+        draw.text((borderwidth+img.size[0]*0.11, digital_text_y),f"{shutter}S",  (232, 190, 90),font=font)
+        draw.text((borderwidth+img.size[0]*0.25, digital_text_y),f"f{fnum}",     (232, 190, 90),font=font)
+        draw.text((borderwidth+img.size[0]*0.35, digital_text_y),f"ISO {iso}",   (232, 190, 90),font=font)
+        # draw.text((borderwidth+img.size[0]*0.65, mono_text_y),f"DATE",(204, 255, 51),font=monofont)
+        draw.text((borderwidth+img.size[0]*0.70, digital_text_y),f"{shottime}",(255, 102, 102),font=font)
+        draw.text((borderwidth+img.size[0]*0.50, digital_text_y),args.author,(204, 255, 51),font=font)
         newim.save(os.path.join(processeddir, file), quality=args.quality)
     except Exception as e: 
         print(e)
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dir",help='''Specify folder path. For example, --dir "C:\\Users\\heber\\Pictures".
                         Note that a "processed" folder will be created and be used to store processed files.''',required=True)
-    parser.add_argument("--author",help='''Who you are.''',default="LindoHe")
+    parser.add_argument("--author",help='''Who you are.''',default="Twitter Lind")
     parser.add_argument("--quality",help='''Quality of JPEG''',default=95, type=int)
     args = parser.parse_args()
     processeddir=os.path.join(args.dir, f"author_{args.author}")
